@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///webpack:///src/style/src/style/src/style/likert.scss"],"names":[],"mappings":"AAAA;EACI,2BAAuB;MAAvB,uBAAuB;CAC1B","file":"app.css","sourcesContent":[".likert div {\r\n    flex-direction: column;\r\n}\r\n\n\n\n// WEBPACK FOOTER //\n// webpack:///src/style/src/style/src/style/likert.scss"],"sourceRoot":""}

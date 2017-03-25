@@ -1,0 +1,142 @@
+{
+  "studyID": "Univie-ZOM-2",
+  "studyName": " Messenger-App „Zom“ Teil 2",
+  "description": "Sie werden die nächsten Aufgaben auf dem\nSmartphone nun außerhalb der Laborräume auf der Straße bearbeiten. Dazu werden\nSie einen Hut mit integrierten Kameras und einem integrierten Mikrofon tragen.\nIhre Interaktionen und ihre Stimme werden aufgezeichnet, nicht jedoch Ihr\nGesicht.\nSie werden den ganzen Weg über Aufgaben\nausführen, die Sie insofern priorisieren sollen, als dass Sie diese Aufgaben\ngewissenhaft bearbeiten. Die Testleitung wird hinter Ihnen gehen und bei Fragen\nansprechbar sein.\n\nWICHTIG: Bitte achten Sie besonders auf den\nStraßenverkehr und begeben Sie sich nicht in gefährliche Situationen. Ihre\nGesundheit hat absoluten Vorrang!",
+  "tasks": [
+    {
+      "data": [
+        {
+          "type": "question",
+          "question": "Sie sind unterwegs und machen sich Sorgen,\ndass jemand Ihre Zom-Nachrichten lesen könnte, wenn Sie Ihr Handy\nunbeaufsichtigt liegen lassen.\nRichten Sie bitte ein Passwort für Zom ein und\nsperren Sie danach die App.\n\n\nWenn Sie die Aufgabe erledigt haben, gehen Sie\nbitte weiter."
+        },
+        {
+          "type": "question",
+          "question": "Sagen sie was",
+          "feedbackType":"freetext"
+        },
+        {
+          "type": "question",
+          "feedbackType": "likert",
+          "question": "Welche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche",
+          "options": [
+            "Blogs",
+            "Wikipedia",
+            "Bibliotheken",
+            "Google",
+            "Springer Online"
+          ],
+          "scale": [
+            {
+              "label": "Sehr häufig",
+              "value": 1
+            },
+            {
+              "label": "häufig",
+              "value": 2
+            },
+            {
+              "label": "neutral",
+              "value": 3
+            },
+            {
+              "label": "selten",
+              "value": 4
+            },
+            {
+              "label": "sehr selten",
+              "value": 5
+            }
+          ]
+        },
+        {
+          "type": "question",
+          "feedbackType": "single choice",
+          "question": "Diese App ist grandios\nDiese App ist grandiosDiese App ist grandios\nDiese App ist grandiosDiese App ist grandiosDiese App ist grandios\n\nDiese App ist grandios\n\n\nDiese App ist grandios",
+          "options": [
+            {
+              "label": "Ja",
+              "value": 1
+            },
+            {
+              "label": "Nein",
+              "value": 2
+            },
+            {
+              "label": "Weiß nicht",
+              "value": 3
+            },
+            {
+              "label": "Hurrah",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "type": "question",
+          "feedbackType": "multiple choice",
+          "question": "Lieben Sie diese app?\nDiese App ist grandios\nDiese App ist grandios\n\n\nDiese App ist grandios",
+          "options": [
+            {
+              "label": "Ja",
+              "value": 1
+            },
+            {
+              "label": "Nein",
+              "value": 2
+            },
+            {
+              "label": "Weiß nicht",
+              "value": 3
+            },
+            {
+              "label": "Hurrah",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "type": "attachement",
+          "attachmentType": "image",
+          "description": "Bitte nehmen Sie ein Bild auf\n\n\nDiese App ist grandios"
+        },
+        {
+          "type": "attachement",
+          "attachmentType": "audio",
+          "description": "Bitte nehmen sie audiodaten auf"
+        },
+                {
+          "type": "attachement",
+          "attachmentType": "video",
+          "description": "Bitte nehmen sie videodaten auf"
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "type": "feedback",
+          "feedbackType": "multiple choice",
+          "question": "dieser task besitzt nur feedback\n\n\nDiese App ist grandios\n\n\nDiese App ist grandios",
+          "options": [
+            {
+              "label": "Ja",
+              "value": 1
+            },
+            {
+              "label": "Nein",
+              "value": 2
+            },
+            {
+              "label": "Weiß nicht",
+              "value": 3
+            },
+            {
+              "label": "Hurrah",
+              "value": 4
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

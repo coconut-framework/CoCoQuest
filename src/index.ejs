@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <title>ESM app</title>
+      <style type="text/css">
+      body{
+        font-family: 'Roboto', sans-serif;
+      }
+              pre {
+          white-space: pre-wrap;
+          white-space: -moz-pre-wrap;
+          white-space: -pre-wrap;
+          white-space: -o-pre-wrap;
+          word-wrap: break-word;
+        }
+
+        .likert div {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        section {
+    margin: 8px;
+}
+body{margin:0}
+
+      </style>
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+      <script src="cordova.js"></script>
+
+      <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <!-- cordova script (this will be a 404 during development) -->
+<script type="text/javascript">
+function onDeviceReady(){
+    document.addEventListener("backbutton", onBackKeyDown, false);
+}
+function onBackKeyDown(e) {
+  e.preventDefault();
+}
+
+// Wait for device API libraries to load
+//
+function onLoad() {
+    document.addEventListener("deviceready", onDeviceReady, false);
+}
+
+// device APIs are available
+//
+function onDeviceReady() {
+    // Now safe to use device APIs
+    cordova.plugins.diagnostic.requestRuntimePermissions(function(statuses){
+      for (var permission in statuses){
+          switch(statuses[permission]){
+              case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                  console.log("Permission granted to use "+permission);
+                  break;
+              case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                  console.log("Permission to use "+permission+" has not been requested yet");
+                  break;
+              case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                  console.log("Permission denied to use "+permission+" - ask again?");
+                  break;
+              case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                  console.log("Permission permanently denied to use "+permission+" - guess we won't be using it then!");
+                  break;
+          }
+      }
+  }, function(error){
+      console.error("The following error occurred: "+error);
+  },[
+      cordova.plugins.diagnostic.permission.WRITE_EXTERNAL_STORAGE,
+      cordova.plugins.diagnostic.permission.READ_EXTERNAL_STORAGE,
+      cordova.plugins.diagnostic.permission.CAMERA,
+      cordova.plugins.diagnostic.permission.RECORD_AUDIO
+  ]);
+}
+
+
+</script>
+  </head>
+  <body>
+  	<div id="app"><%= htmlWebpackPlugin.options.getAppContent() %></div>
+  </body>
+</html>
