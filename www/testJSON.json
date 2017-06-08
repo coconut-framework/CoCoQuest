@@ -1,0 +1,32 @@
+{
+  "studyID": "CoConESM",
+  "studyName": "CoConESM Usability studie",
+  "description": "NEIN",
+  "tasks":
+  [
+    {
+      "data":
+      [
+        {
+						"type": "question",
+						"feedbackType": "sea",
+						"question": "Gute Frage!",
+            "label" : "Thats a label!"
+				},
+        {
+						"type": "question",
+						"feedbackType": "nasa",
+						"question": "Gute Frage2!",
+            "label" : "Thats a label too!",
+            "labelLeft" : "Low",
+            "labelRigth" : "High"
+				},
+        {
+          "type": "question",
+          "question": "Sagen sie was",
+          "feedbackType":"freetext"
+        }
+      ]
+    }
+  ]
+}

@@ -16,6 +16,48 @@
         },
         {
           "type": "question",
+          "question": "Sagen sie was",
+          "feedbackType":"sea",
+          "label" : "Thats a label!",
+          "scale": [
+            {
+              "label": "25",
+              "value": 25
+            },
+            {
+              "label": "50",
+              "value": 50
+            },
+            {
+              "label": "75",
+              "value": 75
+            }
+          ],
+          "labels": [
+            {
+              "label": "one",
+              "value": 25
+            },
+            {
+              "label": "two",
+              "value": 50
+            },
+            {
+              "label": "three",
+              "value": 75
+            }
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Sagen sie was",
+          "feedbackType":"nasa",
+          "label" : "Thats a label!",
+          "labelLeft" : "Low",
+          "labelRigth" : "High"
+        },
+        {
+          "type": "question",
           "feedbackType": "likert",
           "question": "Welche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche\nWelche Tools nutzen Sie für ihre wissenschaftliche recherche",
           "options": [
