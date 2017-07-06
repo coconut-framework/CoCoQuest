@@ -56,10 +56,7 @@ class StudyStartScreen extends Component {
     reset();
     var self = this;
 
-    self.props.start(0,Date.now() )
-    self.props.studyActions.setParticipantNumber("test", self.props.activeStudy);
-
-    /*window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(fileSystem) {
+    window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(fileSystem) {
      console.log("Root = " + cordova.file.externalRootDirectory);
      fileSystem.getDirectory("CoCoQuest", {create: true, exclusive: false},
 
@@ -81,7 +78,7 @@ class StudyStartScreen extends Component {
     }, onError);
     function onError(e) {
           alert("onError");
-    };*/
+    };
 
 
     //
