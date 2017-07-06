@@ -53,13 +53,13 @@ const seaSlider = ({input, label, defaultValue, scale, labels}) => (
         />
       {scale.map((option, i) =>
           <div>
-            <div  style={{position: 'absolute', width: '50%', 'background-color': 'black', height: '1px', bottom: `${option.value}%`}}> </div>
+            <div  style={{position: 'absolute', width: '50%', backgroundColor: 'black', height: '1px', bottom: `${option.value}%`}}> </div>
             <div  style={{position: 'absolute', bottom: `${option.value - 2.5}%`, right: '150%'}}> {option.label} </div>
           </div>
       )}
       {labels.map((option, i) =>
         <div>
-          <div  style={{position: 'absolute', width: '100%', 'background-color': 'black', height: '1px', bottom: `${option.value}%`, left: '50%' }}> </div>
+          <div  style={{position: 'absolute', width: '100%', backgroundColor: 'black', height: '1px', bottom: `${option.value}%`, left: '50%' }}> </div>
           <div  style={{position: 'absolute', bottom: `${option.value - 2.5}%`, left: '200%'}}> {option.label} </div>
         </div>
       )}
@@ -73,8 +73,10 @@ const nasaScale = ({input, label, labelLeft, labelRigth}) => (
     <p>
       <span>{label}</span>
     </p>
-    <div style = {{ position: 'relative', 'border-color': 'black', 'border-width': '2px', 'border-style': 'solid'}}>
-      <Tabs onChange={(val) => input.onChange(val)}>
+    <div style = {{ position: 'relative', borderColor: 'black', borderWidth: '2px', 'borderStyle': 'solid'}}>
+      <div id = 'selectedHighlightJH' style= {{ left: `${input.value-5>=0 ? input.value-5 : 0}%`, width: '5%',top: '2px', bottom: '2px', display: 'block', backgroundColor: 'rgb(255, 64, 129)', height: '100%', 'marginTop': '-2px', position: 'absolute', transition: 'left 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms' }}></div>
+      <Tabs style = {{heigth: '100%'}} onChange={(val) => input.onChange(val+5)} defaultValue={30}>
+        <Tab value={0}/>
         <Tab value={5}/>
         <Tab value={10}/>
         <Tab value={15}/>
@@ -94,27 +96,26 @@ const nasaScale = ({input, label, labelLeft, labelRigth}) => (
         <Tab value={85}/>
         <Tab value={90}/>
         <Tab value={95}/>
-        <Tab value={100}/>
       </Tabs>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '5%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '10%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '15%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '20%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '25%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '30%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '35%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '40%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '45%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '50%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '55%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '60%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '65%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '70%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '75%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '80%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '85%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '100%', 'background-color': 'black', width: '2px', left: '90%'}}> </div>
-      <div  style={{position: 'absolute', bottom:'0px', height: '50%', 'background-color': 'black', width: '2px', left: '95%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '5%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '10%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '15%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '20%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '25%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '30%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '35%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '40%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '45%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '50%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '55%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '60%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '65%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '70%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '75%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '80%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '85%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '100%', backgroundColor: 'black', width: '2px', left: '90%'}}> </div>
+      <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '95%'}}> </div>
     </div>
     <span style={{padding : '5px'}}>{labelLeft}</span>
     <span style={{float : 'right', padding : '5px'}}>{labelRigth}</span>
