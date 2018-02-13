@@ -46,7 +46,7 @@ export default function studies(state = initialState, action) {
 
     case DELETE_STUDY: {
       let studies = state.filter(study =>
-        study.studyID !== action.id
+        study !== action.item
       );
       localforage.setItem('studies',studies).then(function(value) {
           console.log(value);

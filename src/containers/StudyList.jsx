@@ -121,9 +121,7 @@ loadStudy(file) {
 
   deleteStudy(){
     this.handleClose();
-    this.props.studyActions.deleteStudy(this.props.studies[this.state.study].studyID, Date.now());
-
-
+    this.props.studyActions.deleteStudy(this.props.studies[this.state.study]);
   }
 
 

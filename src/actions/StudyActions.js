@@ -76,16 +76,17 @@ export function loadStudies(data) {
   };
 }
 
-export function deleteStudy(id) {
+export function deleteStudy(item) {
   return {
     type: types.DELETE_STUDY,
-    id
+    item
   };
 }
 
 export function setParticipantNumber(number,study) {
   window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(fileSystem) {
    console.log("Root = " + cordova.file.externalRootDirectory);
+   console.log("externalDataDir = " + cordova.file.externalDataDirectory);
    fileSystem.getDirectory("CoCoQuest", {create: true, exclusive: false},
 
    function(dirEntry) {
