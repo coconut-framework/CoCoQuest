@@ -68,7 +68,7 @@ const seaSlider = ({input, label, defaultValue, scale, labels}) => (
 )
 
 //nasaScale Jakob
-const nasaScale = ({input, label, labelLeft, labelRigth}) => (
+const nasaScale = ({input, label, labelLeft, labelRight}) => (
   <div>
     <p>
       <span>{label}</span>
@@ -118,7 +118,7 @@ const nasaScale = ({input, label, labelLeft, labelRigth}) => (
       <div  style={{position: 'absolute', bottom:'0px', height: '50%', backgroundColor: 'black', width: '2px', left: '95%'}}> </div>
     </div>
     <span style={{padding : '5px'}}>{labelLeft}</span>
-    <span style={{float : 'right', padding : '5px'}}>{labelRigth}</span>
+    <span style={{float : 'right', padding : '5px'}}>{labelRight}</span>
 
   </div>
 )
@@ -155,7 +155,7 @@ class Feedback extends Component {
                             <span style={{width:'20%', wordWrap: "break-word"}}>{question}</span>
                             <Field  validate={required} warn={required} style={{width:'100%'}} name={i.toString()}   component={renderRadioGroup}>
                               {this.props.data.scale.map((option, i) =>
-                                <RadioButton className="likert" labelStyle={{  width: '100%',textAlign:'center',fontSize: '10px' }} style={{ display: 'inline-block', width: `${width}%` }} key={option.value} value={option.value}label={option.label}/>
+                                <RadioButton className="likert" labelStyle={{  width: '100%',textAlign:'center',fontSize: '10px' }} style={{ display: 'inline-block', width: `${width}%` }} key={option.value} value={option.value} label={option.label}/>
                               )}
                             </Field>
                           </div>
@@ -175,7 +175,7 @@ class Feedback extends Component {
       component =  ( <Field name="nasaScale" component={nasaScale}
                         label = {this.props.data.label}
                         labelLeft = {this.props.data.labelLeft}
-                        labelRigth = {this.props.data.labelRigth}>
+                        labelRight = {this.props.data.labelRight}>
                       </Field>);
     }
     else if(this.props.data.feedbackType == "single choice"){
