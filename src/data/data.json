@@ -54,7 +54,7 @@
           "feedbackType":"nasa",
           "label" : "Thats a label!",
           "labelLeft" : "Low",
-          "labelRigth" : "High"
+          "labelRight" : "High"
         },
         {
           "type": "question",
