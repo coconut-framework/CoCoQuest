@@ -11,6 +11,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import InfoIcon from 'material-ui/svg-icons/action/info-outline'
 
  class Header extends Component {
 
@@ -19,24 +20,49 @@ import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 
     this.goRoot =  this.goRoot.bind(this);
 
+    this.appName = "ESM APP";
+
     this.state = {
       open: false,
-      dialogOpen:false
+      dialogOpen:false,
+      helpOpen: false,
+      title: this.appName
     };
   }
 
   handleOpen = () => {
-    this.setState({dialogOpen: true});
+    if(this.state.helpOpen){
+      this.setState({
+        helpOpen: false,
+        title: this.appName
+      })
+      this.props.routeActions.push('/')
+    } else {
+      this.setState({dialogOpen: true});
+    }
   };
 
   handleClose = () => {
     this.setState({dialogOpen: false});
   };
 
+  openHelpPage = () => {
+    this.props.routeActions.push('/help');
+    this.setState({
+      helpOpen: true,
+      title: "Help"
+    })
+  };
+
 
   goRoot(){
     this.props.studyActions.abortStudy();
-    this.setState({open: false,  dialogOpen:false});
+    this.setState({
+      open: false,
+      dialogOpen:false,
+      helpOpen: false,
+      title: this.appName
+    });
     this.props.routeActions.push("/");
   }
 
@@ -59,8 +85,9 @@ import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
     return (
       <div>
        <AppBar
-         title="ESM APP"
-          iconElementLeft={<IconButton><NavigationArrowBack /></IconButton>} iconStyleLeft={this.props.activeStudy ? { } :  {display:'none'}  } onLeftIconButtonTouchTap={this.handleOpen }
+         title={this.state.title}
+          iconElementLeft={<IconButton><NavigationArrowBack /></IconButton>} iconStyleLeft={(this.props.activeStudy || this.state.helpOpen) ? { } :  {display:'none'}  } onLeftIconButtonTouchTap={this.handleOpen }
+         iconElementRight={<IconButton><InfoIcon/></IconButton>} iconStyleRight={(this.props.activeStudy === null) ? { } :  {display:'none'}  } onRightIconButtonTouchTap={this.openHelpPage}
        />
        <Dialog
             title="Abbruch?"
