@@ -8,6 +8,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import Study from './Study.jsx';
 import StudyList from './StudyList.jsx';
 import SavedStudies from './SavedStudies.jsx';
+import Help from './Help.jsx';
 import Task from '../components/Task.jsx';
 import Feedback from '../components/Feedback.jsx';
 import Attachement from '../components/Attachement.jsx';
@@ -15,7 +16,7 @@ import StudyStartScreen from '../components/StudyStartScreen.jsx';
 import StudyEndScreen from '../components/StudyEndScreen.jsx';
 import studies from '../reducers/studies';
 import activeStudy from '../reducers/activeStudy';
-import task from '../reducers/task'; 
+import task from '../reducers/task';
 import * as StudyActions from '../actions/StudyActions';
 import configureStore from '../store/configureStore';
 import Header from '../components/Header.jsx';
@@ -44,6 +45,7 @@ class AppRoute extends Component {
         <Route path="/" component={StudyList}/>
         <Route path="/study/:StudyID/" component={Study}/>
         <Route path="/saved" component={SavedStudies}/>
+        <Route path="/help" component={Help}/>
       </Router>
     );
   }
