@@ -16,43 +16,57 @@ export function abortStudy() {
 }
 
 export function finishStudy(study) {
-  localforage.setItem('study'+study.studyID+Date.now(), study).then(function(value) {
-      console.log(value);
-  }).catch(function(err) {
-      // This code runs if there were any errors
-      console.log(err);
-  });
+
+  localforage.getItem(study.studyID)
+    .then((item) => {
+      console.log("study items", item)
+      localforage.setItem(study.studyID, item)
+        .catch((err) => {
+          console.log(err)
+          alert(`Could not add study data`)
+        })
+    })
+    .catch((err) => {
+      console.log('Study does not exist in localforage ... creating', study)
+      localforage.setItem(study.studyID, [study])
+        .catch((err) => {
+          console.log(err)
+        })
+  })
 
   window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(fileSystem) {
    console.log("Root = " + cordova.file.externalRootDirectory);
    fileSystem.getDirectory("CoCoQuest", {create: true, exclusive: false},
 
-   function(dirEntry) {
-     dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
-
      function(dirEntry) {
-       dirEntry.getDirectory(study.participantId, {create: true, exclusive: false},
+       dirEntry.getDirectory("saved", {create: true, exclusive: false},
+         function (dirEntry) {
+           dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
+             function (dirEntry) {
+               dirEntry.getDirectory(study.participantId, {create: true, exclusive:true},
+                 function (dirEntry) {
+                   dirEntry.getFile(`${study.participantId}.json`, {create: true, exclusive: false},
 
-       function(dirEntry) {
-         dirEntry.getFile("study.json", {create: true, exclusive: false},
+                     function (fileEntry) {
+                       console.log("creating file")
+                       fileEntry.createWriter(gotFileWriter, onError);
 
-         function(fileEntry) {
-            fileEntry.createWriter(gotFileWriter, onError);
-
-            function gotFileWriter(writer) {
-                writer.onwriteend = function(evt) {
-                    console.log("contents of file now 'some sample text'");
-                };
-                writer.write(JSON.stringify(study, null, 2));
-            }
+                       function gotFileWriter(writer) {
+                         writer.onwriteend = function (evt) {
+                           console.log("contents of file now 'some sample text'");
+                         };
+                         writer.write(JSON.stringify(study, null, 2));
+                       }
+                     }, onError)
+                 }, onError)
+             }, onError)
          }, onError)
-       }, onError)
      }, onError)
-   }, onError)
-  }, onError);
+   }, onError);
 
   function onError(e) {
-        alert("onError");
+    console.log(e)
+    alert("onError");
   };
 
   return {
@@ -103,7 +117,8 @@ export function setParticipantNumber(number,study) {
   }, onError);
 
   function onError(e) {
-        alert("onError");
+    console.log(e)
+    alert("onError");
   };
 
   return {

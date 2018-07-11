@@ -61,23 +61,26 @@ class StudyStartScreen extends Component {
      fileSystem.getDirectory("CoCoQuest", {create: true, exclusive: false},
 
      function(dirEntry) {
-       dirEntry.getDirectory(self.props.activeStudy.studyID, {create: true, exclusive: false},
+       dirEntry.getDirectory("saved", {create: true, exclusive: false},
 
        function(dirEntry) {
-         dirEntry.getDirectory(data.freetext, {create: false, exclusive: false},
-
+         dirEntry.getDirectory(self.props.activeStudy.studyID, {create: true, exclusive: false},
          function(dirEntry) {
-           console.log("Diese Teilnehmernummer wurde bereits verwendet")
-           self.setState({dialogOpen: true,participantNumber:data.freetext});
-         }, function(error) {
-           self.props.start(0,Date.now() )
-           self.props.studyActions.setParticipantNumber(data.freetext, self.props.activeStudy);
-         })
-       }, onError)
-     }, onError)
-    }, onError);
-    function onError(e) {
-          alert("onError");
+           dirEntry.getFile(`${data.freetext}.json`, {create:false, exclusive:false},
+             () => {
+               console.log("Diese Teilnehmernummer wurde bereits verwendet")
+               self.setState({dialogOpen: true,participantNumber:data.freetext});
+             }, () => {
+               self.props.start(0,Date.now() )
+               self.props.studyActions.setParticipantNumber(data.freetext, self.props.activeStudy);
+             })
+         }, () => onError(`Folder: ${self.props.activeStudy.studyID} was not found!`))
+       }, () => onError(`Folder: saved could not be found!`))
+     }, () => onError(`Folder: CoCoQuest could not be found`))
+    }, () => onError(`Filesystem error: could not open filesystem`));
+
+    function onError(message) {
+      alert(message);
     };
 
 

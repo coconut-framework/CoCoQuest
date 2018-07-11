@@ -1,18 +1,12 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as StudyActions from '../actions/StudyActions';
-import Header from '../components/Header.jsx';
-
-import studyData from 'json!../data/data.json';
-import Task from '../components/Task.jsx';
-import StudyEndScreen from '../components/StudyEndScreen.jsx';
-import StudyStartScreen from '../components/StudyStartScreen.jsx';
-import { push,routeActions } from 'react-router-redux';
-import StudyNavigation from '../components/StudyNavigation.jsx';
-import StudyList from './StudyList.jsx';
-import {reset} from 'redux-form';
-import * as localforage from "localforage";
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import * as StudyActions from '../actions/StudyActions'
+import Task from '../components/Task.jsx'
+import StudyEndScreen from '../components/StudyEndScreen.jsx'
+import StudyStartScreen from '../components/StudyStartScreen.jsx'
+import {push, routeActions} from 'react-router-redux'
+import * as localforage from "localforage"
 
 
 export class Study extends Component {
@@ -21,7 +15,7 @@ export class Study extends Component {
     console.log("study will mount")
     console.log("will mount");
     const self=this;
-    localforage.getItem('studies').then(function(value) {
+    localforage.getItem('_studies').then(function(value) {
         // This code runs once the value has been loaded
         // from the offline store.
         self.props.studyActions.loadStudies(value);
