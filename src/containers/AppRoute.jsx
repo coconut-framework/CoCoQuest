@@ -1,26 +1,14 @@
-import React, { Component, PropTypes } from 'react';
-import { Router, Route, hashHistory, Indexroute, browserHistory } from 'react-router';
-import { connect } from 'react-redux';
-import { bindActionCreators,createStore,combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
+import React, {Component, PropTypes} from 'react'
+import {hashHistory, Indexroute, Route, Router} from 'react-router'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {syncHistoryWithStore} from 'react-router-redux'
 
-import Study from './Study.jsx';
-import StudyList from './StudyList.jsx';
-import SavedStudies from './SavedStudies.jsx';
-import Help from './Help.jsx';
-import Task from '../components/Task.jsx';
-import Feedback from '../components/Feedback.jsx';
-import Attachement from '../components/Attachement.jsx';
-import StudyStartScreen from '../components/StudyStartScreen.jsx';
-import StudyEndScreen from '../components/StudyEndScreen.jsx';
-import studies from '../reducers/studies';
-import activeStudy from '../reducers/activeStudy';
-import task from '../reducers/task';
-import * as StudyActions from '../actions/StudyActions';
-import configureStore from '../store/configureStore';
-import Header from '../components/Header.jsx';
-
+import Study from './Study.jsx'
+import StudyList from './StudyList.jsx'
+import SavedStudies from './SavedStudies.jsx'
+import Help from './Help.jsx'
+import * as StudyActions from '../actions/StudyActions'
 
 
 var store=null;

@@ -51,7 +51,7 @@ export class StudyList extends Component {
   componentWillMount(){
     console.log("will mount");
     const self=this;
-    localforage.getItem('studies').then(function(value) {
+    localforage.getItem('_studies').then(function(value) {
         // This code runs once the value has been loaded
         // from the offline store.
         self.props.studyActions.loadStudies(value);

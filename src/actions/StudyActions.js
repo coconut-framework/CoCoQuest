@@ -16,44 +16,67 @@ export function abortStudy() {
 }
 
 export function finishStudy(study) {
-  localforage.setItem('study'+study.studyID+Date.now(), study).then(function(value) {
-      console.log(value);
-  }).catch(function(err) {
-      // This code runs if there were any errors
-      console.log(err);
-  });
+
+  localforage.getItem(study.studyID)
+    .then((item) => {
+      console.log("study items", item)
+      if ( item === null ) {
+        localforage.setItem(study.studyID, [study])
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+      item.push(study)
+      localforage.setItem(study.studyID, item)
+        .catch((err) => {
+          console.log(err)
+          alert(`Could not add study data`)
+        })
+    })
+    .catch((err) => {
+      console.log('Study does not exist in localforage ... creating', study)
+      localforage.setItem(study.studyID, [study])
+        .catch((err) => {
+          console.log(err)
+        })
+    })
+
+
 
   window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(fileSystem) {
    console.log("Root = " + cordova.file.externalRootDirectory);
    fileSystem.getDirectory("CoCoQuest", {create: true, exclusive: false},
 
-   function(dirEntry) {
-     dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
-
      function(dirEntry) {
-       dirEntry.getDirectory(study.participantId, {create: true, exclusive: false},
+       dirEntry.getDirectory("saved", {create: true, exclusive: false},
+         function (dirEntry) {
+           dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
+             function (dirEntry) {
+               dirEntry.getDirectory(study.participantId, {create: true, exclusive:false},
+                 function (dirEntry) {
+                   dirEntry.getFile(`${study.participantId}.json`, {create: true, exclusive: false},
 
-       function(dirEntry) {
-         dirEntry.getFile("study.json", {create: true, exclusive: false},
+                     function (fileEntry) {
+                       console.log("creating file")
+                       fileEntry.createWriter(gotFileWriter, onError);
 
-         function(fileEntry) {
-            fileEntry.createWriter(gotFileWriter, onError);
+                       function gotFileWriter(writer) {
+                         writer.onwriteend = function (evt) {
+                           console.log("contents of file now 'some sample text'");
+                         };
+                         writer.write(JSON.stringify(study, null, 2));
+                       }
+                     }, (e) => { onError(e, "create file error")})
+                 }, (e) => { onError(e, `error in participantID (${study.participantId}) dir`)})
+             }, (e) => { onError(e, `error in studyID (${study.studyID}) dir`)})
+         }, (e) => { onError(e, "error in saved dir.")})
+     }, (e) => { onError(e, "error in 'CoCoQuest dir.")})
+   }, (e) => { onError(e, "filesystem error")});
 
-            function gotFileWriter(writer) {
-                writer.onwriteend = function(evt) {
-                    console.log("contents of file now 'some sample text'");
-                };
-                writer.write(JSON.stringify(study, null, 2));
-            }
-         }, onError)
-       }, onError)
-     }, onError)
-   }, onError)
-  }, onError);
-
-  function onError(e) {
-        alert("onError");
-  };
+  function onError(e, msg) {
+    console.log(msg, e)
+    alert("onError");
+  }
 
   return {
     type: types.FINISH_STUDY,
@@ -92,8 +115,9 @@ export function setParticipantNumber(number,study) {
    function(dirEntry) {
      dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
 
+       //when creating a new dir for a participant number, make this creation exclusive to treat as ID
      function(dirEntry) {
-       dirEntry.getDirectory(number, {create: true, exclusive: false},
+       dirEntry.getDirectory(number, {create: true, exclusive: true},
 
          function(dirEntry) {
              console.log(dirEntry)
@@ -103,7 +127,8 @@ export function setParticipantNumber(number,study) {
   }, onError);
 
   function onError(e) {
-        alert("onError");
+    console.log(e)
+    alert("onError");
   };
 
   return {

@@ -25,20 +25,19 @@ class AudioForm extends Component {
        console.log("Root = " + cordova.file.externalRootDirectory);
        fileSystem.getDirectory("CoCoQuest", {create: true, exclusive: false},
 
-       function(dirEntry) {
-         dirEntry.getDirectory(self.props.activeStudy.studyID, {create: true, exclusive: false},
-
          function(dirEntry) {
-           dirEntry.getDirectory(self.props.activeStudy.participantId, {create: true, exclusive: false},
-
-           function(dirEntry) {
-             oEntry.moveTo(dirEntry, filename, Success, onFail)
-           }, onError)
+           dirEntry.getDirectory("saved", {create: true, exclusive: false},
+             function (dirEntry) {
+               dirEntry.getDirectory(self.props.activeStudy.studyID, {create: true, exclusive: false},
+                 function (dirEntry) {
+                   dirEntry.getDirectory(self.props.activeStudy.participantId, {create: true, exclusive:true},
+                     function (dirEntry) {
+                       oEntry.moveTo(dirEntry, filename, Success, onFail)
+                     }, onError)
+                 }, onError)
+             }, onError)
          }, onError)
-       }, onError)
       }, onError);
-
-
     }
 
     function makeid() {
@@ -56,7 +55,8 @@ class AudioForm extends Component {
     }
 
     function onError(e) {
-          alert("onError");
+      console.log(e)
+      alert("onError");
     };
 
     function Success(message) {

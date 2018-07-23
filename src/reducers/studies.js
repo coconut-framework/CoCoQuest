@@ -29,7 +29,7 @@ export default function studies(state = initialState, action) {
         ...action.data,
         id: (state.length === 0) ? 0 : state.length
       }];
-      localforage.setItem('studies',studies).then(function(value) {
+      localforage.setItem('_studies',studies).then(function(value) {
           console.log(value);
       }).catch(function(err) {
           // This code runs if there were any errors
@@ -48,7 +48,7 @@ export default function studies(state = initialState, action) {
       let studies = state.filter(study =>
         study !== action.item
       );
-      localforage.setItem('studies',studies).then(function(value) {
+      localforage.setItem('_studies',studies).then(function(value) {
           console.log(value);
       }).catch(function(err) {
           // This code runs if there were any errors
