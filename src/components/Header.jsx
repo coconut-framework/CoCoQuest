@@ -9,7 +9,7 @@ import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import InfoIcon from 'material-ui/svg-icons/action/info-outline'
-import ExportIcon from 'material-ui/svg-icons/editor/publish'
+import ArchiveIcon from 'material-ui/svg-icons/content/archive'
 import {white} from 'material-ui/styles/colors'
 
 class Header extends Component {
@@ -80,7 +80,7 @@ class Header extends Component {
    rightMenu = (
      <div>
        <IconButton onTouchTap={this.openSavedStudies}>
-         <ExportIcon color={white}/>
+         <ArchiveIcon color={white}/>
        </IconButton>
        <IconButton onTouchTap={this.openHelpPage}>
          <InfoIcon color={white}/>
