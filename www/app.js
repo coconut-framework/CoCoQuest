@@ -53975,6 +53975,12 @@
 	
 	  localforage.getItem(study.studyID).then(function (item) {
 	    console.log("study items", item);
+	    if (item === null) {
+	      localforage.setItem(study.studyID, [study]).catch(function (err) {
+	        console.log(err);
+	      });
+	    }
+	    item.push(study);
 	    localforage.setItem(study.studyID, item).catch(function (err) {
 	      console.log(err);
 	      alert("Could not add study data");
@@ -53991,7 +53997,7 @@
 	    fileSystem.getDirectory("CoCoQuest", { create: true, exclusive: false }, function (dirEntry) {
 	      dirEntry.getDirectory("saved", { create: true, exclusive: false }, function (dirEntry) {
 	        dirEntry.getDirectory(study.studyID, { create: true, exclusive: false }, function (dirEntry) {
-	          dirEntry.getDirectory(study.participantId, { create: true, exclusive: true }, function (dirEntry) {
+	          dirEntry.getDirectory(study.participantId, { create: true, exclusive: false }, function (dirEntry) {
 	            dirEntry.getFile(study.participantId + ".json", { create: true, exclusive: false }, function (fileEntry) {
 	              console.log("creating file");
 	              fileEntry.createWriter(gotFileWriter, onError);
@@ -54002,17 +54008,29 @@
 	                };
 	                writer.write(JSON.stringify(study, null, 2));
 	              }
-	            }, onError);
-	          }, onError);
-	        }, onError);
-	      }, onError);
-	    }, onError);
-	  }, onError);
+	            }, function (e) {
+	              onError(e, "create file error");
+	            });
+	          }, function (e) {
+	            onError(e, "error in participantID (" + study.participantId + ") dir");
+	          });
+	        }, function (e) {
+	          onError(e, "error in studyID (" + study.studyID + ") dir");
+	        });
+	      }, function (e) {
+	        onError(e, "error in saved dir.");
+	      });
+	    }, function (e) {
+	      onError(e, "error in 'CoCoQuest dir.");
+	    });
+	  }, function (e) {
+	    onError(e, "filesystem error");
+	  });
 	
-	  function onError(e) {
-	    console.log(e);
+	  function onError(e, msg) {
+	    console.log(msg, e);
 	    alert("onError");
-	  };
+	  }
 	
 	  return {
 	    type: types.FINISH_STUDY,
@@ -54046,8 +54064,11 @@
 	    console.log("Root = " + cordova.file.externalRootDirectory);
 	    console.log("externalDataDir = " + cordova.file.externalDataDirectory);
 	    fileSystem.getDirectory("CoCoQuest", { create: true, exclusive: false }, function (dirEntry) {
-	      dirEntry.getDirectory(study.studyID, { create: true, exclusive: false }, function (dirEntry) {
-	        dirEntry.getDirectory(number, { create: true, exclusive: false }, function (dirEntry) {
+	      dirEntry.getDirectory(study.studyID, { create: true, exclusive: false },
+	
+	      //when creating a new dir for a participant number, make this creation exclusive to treat as ID
+	      function (dirEntry) {
+	        dirEntry.getDirectory(number, { create: true, exclusive: true }, function (dirEntry) {
 	          console.log(dirEntry);
 	        }, onError);
 	      }, onError);
@@ -79984,9 +80005,9 @@
 	
 	var _infoOutline2 = _interopRequireDefault(_infoOutline);
 	
-	var _publish = __webpack_require__(904);
+	var _archive = __webpack_require__(904);
 	
-	var _publish2 = _interopRequireDefault(_publish);
+	var _archive2 = _interopRequireDefault(_archive);
 	
 	var _colors = __webpack_require__(905);
 	
@@ -80048,7 +80069,7 @@
 	      _react2.default.createElement(
 	        _IconButton2.default,
 	        { onTouchTap: _this.openSavedStudies },
-	        _react2.default.createElement(_publish2.default, { color: _colors.white })
+	        _react2.default.createElement(_archive2.default, { color: _colors.white })
 	      ),
 	      _react2.default.createElement(
 	        _IconButton2.default,
@@ -80644,18 +80665,18 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var EditorPublish = function EditorPublish(props) {
+	var ContentArchive = function ContentArchive(props) {
 	  return _react2.default.createElement(
 	    _SvgIcon2.default,
 	    props,
-	    _react2.default.createElement('path', { d: 'M5 4v2h14V4H5zm0 10h4v6h6v-6h4l-7-7-7 7z' })
+	    _react2.default.createElement('path', { d: 'M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z' })
 	  );
 	};
-	EditorPublish = (0, _pure2.default)(EditorPublish);
-	EditorPublish.displayName = 'EditorPublish';
-	EditorPublish.muiName = 'SvgIcon';
+	ContentArchive = (0, _pure2.default)(ContentArchive);
+	ContentArchive.displayName = 'ContentArchive';
+	ContentArchive.muiName = 'SvgIcon';
 	
-	exports.default = EditorPublish;
+	exports.default = ContentArchive;
 
 /***/ }),
 /* 905 */
@@ -81522,7 +81543,15 @@
 	    key: 'handleListItemClick',
 	    value: function handleListItemClick(item) {
 	
-	      window.plugins.socialsharing.shareWithOptions({}, function () {}, function () {});
+	      window.plugins.socialsharing.shareWithOptions({
+	        files: [cordova.file.externalRootDirectory + '/CoCoQuest/saved/' + item.studyID + '/' + item.participantId + '/' + item.participantId + '.json'], // an array of filenames either locally or remotely
+	        chooserTitle: 'Share Study Results from participant ' + item.participantId
+	      }, function () {
+	        alert("Successfully shared");
+	      }, function (e) {
+	        console.log(e);
+	        alert("an Error occurred during sharing");
+	      });
 	
 	      console.log(item);
 	    }
