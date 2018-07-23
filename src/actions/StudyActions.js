@@ -20,6 +20,13 @@ export function finishStudy(study) {
   localforage.getItem(study.studyID)
     .then((item) => {
       console.log("study items", item)
+      if ( item === null ) {
+        localforage.setItem(study.studyID, [study])
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+      item.push(study)
       localforage.setItem(study.studyID, item)
         .catch((err) => {
           console.log(err)
@@ -32,7 +39,9 @@ export function finishStudy(study) {
         .catch((err) => {
           console.log(err)
         })
-  })
+    })
+
+
 
   window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(fileSystem) {
    console.log("Root = " + cordova.file.externalRootDirectory);
@@ -43,7 +52,7 @@ export function finishStudy(study) {
          function (dirEntry) {
            dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
              function (dirEntry) {
-               dirEntry.getDirectory(study.participantId, {create: true, exclusive:true},
+               dirEntry.getDirectory(study.participantId, {create: true, exclusive:false},
                  function (dirEntry) {
                    dirEntry.getFile(`${study.participantId}.json`, {create: true, exclusive: false},
 
@@ -57,17 +66,17 @@ export function finishStudy(study) {
                          };
                          writer.write(JSON.stringify(study, null, 2));
                        }
-                     }, onError)
-                 }, onError)
-             }, onError)
-         }, onError)
-     }, onError)
-   }, onError);
+                     }, (e) => { onError(e, "create file error")})
+                 }, (e) => { onError(e, `error in participantID (${study.participantId}) dir`)})
+             }, (e) => { onError(e, `error in studyID (${study.studyID}) dir`)})
+         }, (e) => { onError(e, "error in saved dir.")})
+     }, (e) => { onError(e, "error in 'CoCoQuest dir.")})
+   }, (e) => { onError(e, "filesystem error")});
 
-  function onError(e) {
-    console.log(e)
+  function onError(e, msg) {
+    console.log(msg, e)
     alert("onError");
-  };
+  }
 
   return {
     type: types.FINISH_STUDY,
@@ -106,8 +115,9 @@ export function setParticipantNumber(number,study) {
    function(dirEntry) {
      dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
 
+       //when creating a new dir for a participant number, make this creation exclusive to treat as ID
      function(dirEntry) {
-       dirEntry.getDirectory(number, {create: true, exclusive: false},
+       dirEntry.getDirectory(number, {create: true, exclusive: true},
 
          function(dirEntry) {
              console.log(dirEntry)

@@ -73,11 +73,20 @@ export default class SavedStudies extends Component {
 
   }
 
+  /**
+   * this method takes care of sharing the created JSON files from a study in the App.
+   * @param item
+   */
   handleListItemClick(item) {
-
       window.plugins.socialsharing.shareWithOptions({
-
-      }, () => {}, () => {})
+        files: [`${cordova.file.externalRootDirectory}/CoCoQuest/saved/${item.studyID}/${item.participantId}/${item.participantId}.json`], // an array of filenames either locally or remotely
+        chooserTitle: `Share Study Results from participant ${item.participantId}`
+      }, () => {
+        console.log("shared successfully")
+      }, (e) => {
+        console.log(e)
+        alert("an Error occurred during sharing")
+      })
 
       console.log(item)
   }
