@@ -12,7 +12,7 @@ webapp which can be found [here](http://wwwlab.cs.univie.ac.at/~schusterl15/coco
 ## Data structure
 
 A CoCoQuest compatible JSON-File should look something like this:
-```json
+```
 {
   "studyID": "this won't be visible to anybody, but should be unique in the app",
   "studyName": "The name of the study which will be shown in the app",
@@ -55,7 +55,7 @@ The options are described in the following:
 
 The freetext feedback is the simplest type and constructed as follows:
 
-```json
+```
 {
   "type": "question",
   "question": "The question text the user should answer",
@@ -67,7 +67,7 @@ The freetext feedback is the simplest type and constructed as follows:
 
 The sea scale needs a scale of points and matching labels for the data points.
 
-```json
+```
 {
   "type": "question",
   "feedbackType":"sea",
@@ -133,7 +133,7 @@ This scale also needs two arrays one for options and one for the scale:
 
 The choice types are built up the same way and only need `options` to be passed:
 
-```json
+```
 {
   "type": "question",
   "feedbackType": "(single|multiple) choice",
