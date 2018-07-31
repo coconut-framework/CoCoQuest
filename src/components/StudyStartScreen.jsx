@@ -45,6 +45,11 @@ class StudyStartScreen extends Component {
     this.setState({dialogOpen: false});
   };
 
+  forceRetakeStudy = () => {
+    this.props.studyActions.forceRetakeStudy(this.props.activeStudy)
+    this.startStudy()
+  }
+
   startStudy(){
     this.props.start(0,Date.now() )
     this.props.studyActions.setParticipantNumber(this.state.participantNumber, this.props.activeStudy);
@@ -62,11 +67,10 @@ class StudyStartScreen extends Component {
 
      function(dirEntry) {
        dirEntry.getDirectory("saved", {create: true, exclusive: false},
-
        function(dirEntry) {
          dirEntry.getDirectory(self.props.activeStudy.studyID, {create: true, exclusive: false},
          function(dirEntry) {
-           dirEntry.getFile(`${data.freetext}.json`, {create:false, exclusive:false},
+           dirEntry.getDirectory(data.freetext, {create: false, exclusive:false},
              () => {
                console.log("Diese Teilnehmernummer wurde bereits verwendet")
                self.setState({dialogOpen: true,participantNumber:data.freetext});
@@ -100,7 +104,7 @@ class StudyStartScreen extends Component {
       <FlatButton
         label="Ja"
         primary={true}
-        onTouchTap={this.startStudy.bind(this)}
+        onTouchTap={this.forceRetakeStudy}
       />,
     ];
 

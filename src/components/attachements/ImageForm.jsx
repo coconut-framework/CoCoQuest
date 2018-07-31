@@ -53,7 +53,16 @@ class ImageForm extends Component {
                    dirEntry.getDirectory(self.props.activeStudy.participantId, {create: true, exclusive:true},
                      function (dirEntry) {
                        oEntry.moveTo(dirEntry, filename, Success, onFail)
-                     }, onError)
+                     }, () => {
+                        if(self.props.activeStudy.forced) {
+                          dirEntry.getDirectory(self.props.activeStudy.participantId, {create: true, exclusive:false},
+                            function(dirEntry) {
+                              oEntry.moveTo(dirEntry, filename, Success, onFail)
+                            }, onError)
+                        } else {
+                          onError()
+                        }
+                     })
                  }, onError)
              }, onError)
          }, onError)

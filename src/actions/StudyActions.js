@@ -26,7 +26,16 @@ export function finishStudy(study) {
             console.log(err)
           })
       }
-      item.push(study)
+      if(study.forced) {
+        // replacement is forced
+        item = item.map(i => {
+          if (i.participantId === study.participantId)
+            return study
+          else return i
+        })
+      } else {
+        item.push(study)
+      }
       localforage.setItem(study.studyID, item)
         .catch((err) => {
           console.log(err)
@@ -75,7 +84,10 @@ export function finishStudy(study) {
 
   function onError(e, msg) {
     console.log(msg, e)
-    alert("onError");
+
+    if(!study.forced) {
+      alert(msg);
+    }
   }
 
   return {
@@ -106,29 +118,40 @@ export function deleteStudy(item) {
   };
 }
 
+export function forceRetakeStudy(item) {
+  item.forced = true;
+  console.log("forced retaking");
+  return {
+    type: types.FORCE_RETAKE_STUDY,
+    item
+  }
+}
+
 export function setParticipantNumber(number,study) {
   window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, function(fileSystem) {
    console.log("Root = " + cordova.file.externalRootDirectory);
    console.log("externalDataDir = " + cordova.file.externalDataDirectory);
    fileSystem.getDirectory("CoCoQuest", {create: true, exclusive: false},
-
-   function(dirEntry) {
-     dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
-
-       //when creating a new dir for a participant number, make this creation exclusive to treat as ID
      function(dirEntry) {
-       dirEntry.getDirectory(number, {create: true, exclusive: true},
-
+       dirEntry.getDirectory("saved", {create: true, exclusive: false},
          function(dirEntry) {
-             console.log(dirEntry)
-         }, onError)
+           dirEntry.getDirectory(study.studyID, {create: true, exclusive: false},
+             //when creating a new dir for a participant number, make this creation exclusive to treat as ID
+           function(dirEntry) {
+             dirEntry.getDirectory(number, {create: true, exclusive: true},
+               function(dirEntry) {
+                   console.log(dirEntry)
+               }, onError)
+           }, onError);
+         }, onError);
      }, onError);
    }, onError);
-  }, onError);
 
   function onError(e) {
     console.log(e)
-    alert("onError");
+    if(!study.forced) {
+      alert("onError");
+    }
   };
 
   return {

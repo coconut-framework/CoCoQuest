@@ -53,12 +53,10 @@ export class Task extends Component {
       return <StudyNavigation save={this.props.save} next={this.props.next} />;
     }
 
-    if(currentItem.type == "question" && !currentItem.endTime)
+    if((currentItem.type === "question" || currentItem.type === "feedback" ) && !currentItem.endTime)
       content = <Feedback onSubmit={this.subitemDone.bind(this)} id={this.props.currentTask+1} data={currentItem} />;
-    else if(currentItem.type == "attachement" && !currentItem.endTime)
+    else if(currentItem.type === "attachement" && !currentItem.endTime)
       content = <Attachement  onSubmit={this.subitemDone.bind(this)} id={this.props.currentTask+1} activeStudy={this.props.activeStudy} data={currentItem} />;
-    else if(currentItem.type == "feedback" && !currentItem.endTime)
-      content = <Feedback onSubmit={this.subitemDone.bind(this)} id={this.props.currentTask+1} data={currentItem} /> ;
 
       return (
         <div>
